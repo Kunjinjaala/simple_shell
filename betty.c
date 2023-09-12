@@ -11,9 +11,9 @@ int main(void)
 
 	printf("Hi, Checker!\n");
 
-	for (i > 0; i < 10; i++)
+	for (i > 1; i < 10; i++)
 	{
-		printf("Single digit Integers  %d\n", i);
+		printf("Single digit Integer  %d\n", i);
 	}
 
 	return (0);
