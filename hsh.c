@@ -61,22 +61,22 @@ int find_builtin(info_t *info)
 {
 	int a, built_in_ret = -1;
 	builtin_table builtintbl[] = {
-		{"exit", _myexit},
-		{"env", _myenv},
-		{"help", _myhelp},
-		{"history", _myhistory},
-		{"setenv", _mysetenv},
-		{"unsetenv", _myunsetenv},
-		{"cd", _mycd},
-		{"alias", _myalias},
+		{"exit", _exit},
+		{"env", _env},
+		{"help", _help},
+		{"history", _history},
+		{"setenv", set_env},
+		{"unsetenv", unset_env},
+		{"cd", _cd},
+		{"alias", _alias},
 		{NULL, NULL}
 	};
 
-	for (i = 0; builtintbl[i].type; i++)
-		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
+	for (a = 0; builtintbl[a].type; a++)
+		if (_strcmp(info->argv[0], builtintbl[a].type) == 0)
 		{
 			info->line_count++;
-			built_in_ret = builtintbl[i].func(info);
+			built_in_ret = builtintbl[a].func(info);
 			break;
 		}
 	return (built_in_ret);
@@ -84,6 +84,7 @@ int find_builtin(info_t *info)
 
 /**
  * find_cmd - finds a command in PATH
+ *
  * @info: the parameter & return info struct
  *
  * Return: void
@@ -91,7 +92,7 @@ int find_builtin(info_t *info)
 void find_cmd(info_t *info)
 {
 	char *path = NULL;
-	int i, k;
+	int a, b;
 
 	info->path = info->argv[0];
 	if (info->linecount_flag == 1)
@@ -99,10 +100,10 @@ void find_cmd(info_t *info)
 		info->line_count++;
 		info->linecount_flag = 0;
 	}
-	for (i = 0, k = 0; info->arg[i]; i++)
-		if (!is_delim(info->arg[i], " \t\n"))
-			k++;
-	if (!k)
+	for (a = 0, b = 0; info->arg[b]; b++)
+		if (!is_delim(info->arg[a], " \t\n"))
+			b++;
+	if (!b)
 		return;
 
 	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
@@ -126,6 +127,7 @@ void find_cmd(info_t *info)
 
 /**
  * fork_cmd - forks a an exec thread to run cmd
+ *
  * @info: the parameter & return info struct
  *
  * Return: void
@@ -163,5 +165,3 @@ void fork_cmd(info_t *info)
 		}
 	}
 }
-
-
