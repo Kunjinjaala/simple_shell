@@ -2,15 +2,18 @@
 
 /**
  * input_buf - buffers chained commands
+ *
  * @info: parameter struct
+ *
  * @buf: address of buffer
+ *
  * @len: address of len var
  *
  * Return: bytes read
  */
 ssize_t input_buf(info_t *info, char **buf, size_t *len)
 {
-	ssize_t read 0;
+	ssize_t read = 0;
 	size_t len_p = 0;
 
 	if (!*len) /* if nothing left in the buffer, fill it */
@@ -28,7 +31,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 			if ((*buf)[read - 1] == '\n')
 			{
 				(*buf)[read - 1] = '\0'; /* remove trailing newline */
-				r--;
+				read--;
 			}
 			info->linecount_flag = 1;
 			remove_comments(*buf);
@@ -57,7 +60,7 @@ ssize_t get_input(info_t *info)
 	char **buf_p = &(info->arg), *p;
 
 	_putchar(BUF_FLUSH);
-	r = input_buf(info, &buf, &len);
+	read = input_buf(info, &buf, &len);
 	if (read == -1)
 		return (-1);
 	if (len)
@@ -98,14 +101,14 @@ ssize_t get_input(info_t *info)
  */
 ssize_t read_buf(info_t *info, char *buf, size_t *a)
 {
-	ssize_t read = 0;
+	ssize_t rd = 0;
 
 	if (*a)
 		return (0);
-	read = read(info->readfd, buf, READ_BUF_SIZE);
-	if (read >= 0)
-		*a = read;
-	return (read);
+	rd = read(info->readfd, buf, READ_BUF_SIZE);
+	if (rd >= 0)
+		*a = rd;
+	return (rd);
 }
 
 /**
@@ -141,7 +144,7 @@ int _getline(info_t *info, char **ptr, size_t *length)
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		_strncat(new_p, buf + a, c - i);
+		_strncat(new_p, buf + a, c - a);
 	else
 		_strncpy(new_p, buf + a, c - a + 1);
 

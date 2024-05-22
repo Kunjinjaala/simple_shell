@@ -2,6 +2,7 @@
 
 /**
  * interactive - returns true if shell is in interactive mode
+ *
  * @info: struct address
  *
  * Return: 1 if interactive mode, 0 otherwise
@@ -13,12 +14,12 @@ int interactive(info_t *info)
 }
 
 /**
- * _delim - checks if character is a delimeter
+ * _isdelim - checks if character is a delimeter
  * @c: the char to check
  * @delim: the delimeter string
  * Return: 1 if true, 0 if false
  */
-int _delim(char a, char *delim)
+int _isdelim(char a, char *delim)
 {
 	while (*delim)
 		if (*delim++ == a)

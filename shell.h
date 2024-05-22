@@ -1,4 +1,4 @@
-#ifnef _SHELL_H_
+#ifndef _SHELL_H_
 #define _SHELL_H_
 
 #include <stdio.h>
@@ -160,7 +160,7 @@ int bfree(void **);
 
 /* toem_atoi.c */
 int interactive(info_t *);
-int _delim(char, char *);
+int _isdelim(char, char *);
 int _isalpha(int);
 int _atoi(char *);
 
@@ -172,7 +172,7 @@ char *convert_number(long int, int, int);
 void remove_comments(char *);
 
 /* toem_builtin.c */
-int _exit(info_t *);
+int shell_exit(info_t *);
 int _cd(info_t *);
 int _help(info_t *);
 

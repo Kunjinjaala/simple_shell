@@ -20,7 +20,7 @@ char **str_to_two(char *str, char *delm)
 	if (!delm)
 		delm = " ";
 	for (a = 0; str[a] != '\0'; a++)
-		if (!is_delim(str[a], delm) && (is_delim(str[a + 1], delm) || !str[a + 1]))
+		if (!_isdelim(str[a], delm) && (_isdelim(str[a + 1], delm) || !str[a + 1]))
 			numwords++;
 
 	if (numwords == 0)
@@ -30,10 +30,10 @@ char **str_to_two(char *str, char *delm)
 		return (NULL);
 	for (a = 0, b = 0; b < numwords; b++)
 	{
-		while (is_delim(str[a], delm))
+		while (_isdelim(str[a], delm))
 			a++;
 		c = 0;
-		while (!is_delim(str[a + c], delm) && str[a + c])
+		while (!_isdelim(str[a + c], delm) && str[a + c])
 			c++;
 		s[b] = malloc((c + 1) * sizeof(char));
 		if (!s[b])
@@ -68,7 +68,7 @@ char **str_to_two2(char *str, char delm)
 	if (str == NULL || str[0] == 0)
 		return (NULL);
 	for (a = 0; str[a] != '\0'; a++)
-		if ((str[a] != d && str[a + 1] == delm) ||
+		if ((str[a] != delm && str[a + 1] == delm) ||
 				    (str[a] != delm && !str[a + 1]) || str[a + 1] == delm)
 			numwords++;
 
