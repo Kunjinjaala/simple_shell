@@ -113,8 +113,11 @@ ssize_t read_buf(info_t *info, char *buf, size_t *a)
 
 /**
  * _getline - gets the next line of input from STDIN
+ *
  * @info: parameter struct
+ *
  * @ptr: address of pointer to buffer, preallocated or NULL
+ *
  * @length: size of preallocated ptr buffer if not NULL
  *
  * Return: s
@@ -124,42 +127,43 @@ int _getline(info_t *info, char **ptr, size_t *length)
 	static char buf[READ_BUF_SIZE];
 	static size_t a, len;
 	size_t c;
-	ssize_t read = 0, s = 0;
-	char *p = NULL, *new_p = NULL, *d;
+	ssize_t rd = 0, s = 0;
+	char *pt = NULL, *new_pt = NULL, *d;
 
-	p = *ptr;
-	if (p && length)
+	pt = *ptr;
+	if (pt && length)
 		s = *length;
 	if (a == len)
 		a = len = 0;
 
-	read = read_buf(info, buf, &len);
-	if (read == -1 || (read == 0 && len == 0))
+	rd = read_buf(info, buf, &len);
+	if (rd == -1 || (rd == 0 && len == 0))
 		return (-1);
 
-	c = _strchr(buf + a, '\n');
+	d = _strchr(buf + a, '\n');
 	c = d ? 1 + (unsigned int)(d - buf) : len;
-	new_p = _realloc(p, s, s ? s + c : c + 1);
-	if (!new_p) /* MALLOC FAILURE! */
-		return (p ? free(p), -1 : -1);
+	new_pt = _realloc(pt, s, s ? s + c : c + 1);
+	if (!new_pt) /* MALLOC FAILURE! */
+		return (pt ? free(pt), -1 : -1);
 
 	if (s)
-		_strncat(new_p, buf + a, c - a);
+		_strncat(new_pt, buf + a, c - a);
 	else
-		_strncpy(new_p, buf + a, c - a + 1);
+		_strncpy(new_pt, buf + a, c - a + 1);
 
 	s += c - a;
 	a = c;
-	p = new_p;
+	pt = new_pt;
 
 	if (length)
 		*length = s;
-	*ptr = p;
+	*ptr = pt;
 	return (s);
 }
 
 /**
  * sigintHandler - blocks ctrl-C
+ *
  * @sig_num: the signal number
  *
  * Return: void
